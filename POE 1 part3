@@ -1,0 +1,159 @@
+/**
+ * Mog Hub - Core Client Application Script
+ * Concepts Covered: 
+ * 1. SEO Tags (Dynamic Metadata Manipulation)
+ * 2. Forms and Validation
+ * 3. Interactive Functions and Elements
+ */
+
+document.addEventListener("DOMContentLoaded", function () {
+    
+    // =========================================================================
+    // 1. SEO TAGS CONCEPT (Dynamic Metadata Injection)
+    // =========================================================================
+    function injectSeoTags() {
+        // Validate or generate the page description meta tag
+        let descMeta = document.querySelector('meta[name="description"]');
+        if (!descMeta) {
+            descMeta = document.createElement('meta');
+            descMeta.setAttribute('name', 'description');
+            document.head.appendChild(descMeta);
+        }
+        descMeta.setAttribute('content', 'Welcome to Mog Hub. Explore our premium membership, reserve your studio spot with our dynamic validation engine, or join our workspace team.');
+
+        // Validate or generate page keywords meta tag
+        let keywordsMeta = document.querySelector('meta[name="keywords"]');
+        if (!keywordsMeta) {
+            keywordsMeta = document.createElement('meta');
+            keywordsMeta.setAttribute('name', 'keywords');
+            document.head.appendChild(keywordsMeta);
+        }
+        keywordsMeta.setAttribute('content', 'Mog Hub, booking engine, validation, interactive development, Pretoria IT');
+
+        // Dynamic Open Graph implementation for indexing visibility
+        let ogTitle = document.querySelector('meta[property="og:title"]');
+        if (!ogTitle) {
+            ogTitle = document.createElement('meta');
+            ogTitle.setAttribute('property', 'og:title');
+            document.head.appendChild(ogTitle);
+        }
+        ogTitle.setAttribute('content', document.title || 'Mog Hub Architecture Workspace');
+    }
+    
+    // Run structural SEO injection immediately on content load
+    injectSeoTags();
+
+
+    // =========================================================================
+    // 2. FORMS AND VALIDATION CONCEPT
+    // =========================================================================
+    const bookingForm = document.getElementById("bookingForm");
+    
+    if (bookingForm) {
+        // Disable default HTML5 browser verification messages to use custom logic
+        bookingForm.setAttribute('novalidate', 'true');
+
+        bookingForm.addEventListener("submit", function (event) {
+            event.preventDefault(); // Stop form submission refresh
+
+            // Targets for execution validation
+            const fullName = document.getElementById("fullName");
+            const userEmail = document.getElementById("userEmail");
+            const sessionType = document.getElementById("sessionType");
+
+            // Error display nodes
+            const nameError = document.getElementById("nameError");
+            const emailError = document.getElementById("emailError");
+            const sessionError = document.getElementById("sessionError");
+            const successAlert = document.getElementById("successAlert");
+
+            let isFormValid = true;
+
+            // Full Name verification: Must meet size prerequisites (3+ chars)
+            if (!fullName || fullName.value.trim().length < 3) {
+                if (nameError) nameError.style.display = "block";
+                if (fullName) fullName.style.borderColor = "#ee4a09";
+                isFormValid = false;
+            } else {
+                if (nameError) nameError.style.display = "none";
+                if (fullName) fullName.style.borderColor = "#ccc";
+            }
+
+            // Email verification: Standard structural regex validation match
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            if (!userEmail || !emailRegex.test(userEmail.value.trim())) {
+                if (emailError) emailError.style.display = "block";
+                if (userEmail) userEmail.style.borderColor = "#ee4a09";
+                isFormValid = false;
+            } else {
+                if (emailError) emailError.style.display = "none";
+                if (userEmail) userEmail.style.borderColor = "#ccc";
+            }
+
+            // Selection choice check: Dropdown must not be empty
+            if (!sessionType || sessionType.value === "") {
+                if (sessionError) sessionError.style.display = "block";
+                if (sessionType) sessionType.style.borderColor = "#ee4a09";
+                isFormValid = false;
+            } else {
+                if (sessionError) sessionError.style.display = "none";
+                if (sessionType) sessionType.style.borderColor = "#ccc";
+            }
+
+            // Fulfill execution if tracking passes structural checks
+            if (isFormValid && successAlert) {
+                const clientName = fullName.value.trim().split(" ")[0];
+                successAlert.textContent = `Success! Request verified for ${clientName}. System tracking active.`;
+                successAlert.style.display = "block";
+                
+                bookingForm.reset(); // Safely wipe input data nodes
+
+                // Auto-clear notification display block after a set period
+                setTimeout(() => {
+                    successAlert.style.display = "none";
+                }, 5000);
+            }
+        });
+    }
+
+
+    // =========================================================================
+    // 3. INTERACTIVE FUNCTIONS AND ELEMENTS CONCEPT
+    // =========================================================================
+    
+    // Interactive Element A: Dynamic Style Modification/Theme Swapping
+    const themeBtn = document.getElementById("themeToggle");
+    if (themeBtn) {
+        themeBtn.addEventListener("click", function () {
+            document.body.classList.toggle("dark-theme");
+        });
+    }
+
+    // Interactive Element B: Environment Latency Processing Simulator
+    const pingBtn = document.getElementById("pingBtn");
+    const latencyValue = document.getElementById("latencyValue");
+    const statusIndicator = document.getElementById("statusIndicator");
+
+    if (pingBtn && latencyValue && statusIndicator) {
+        pingBtn.addEventListener("click", function () {
+            // Instantly transition UI display text elements to processing mode
+            latencyValue.textContent = "Processing...";
+            statusIndicator.textContent = "Syncing Engine...";
+            statusIndicator.style.color = "#ee4a09";
+
+            // Trigger latency metrics variation simulation window delay
+            setTimeout(() => {
+                const generatedPing = Math.floor(Math.random() * (48 - 6 + 1)) + 6;
+                latencyValue.textContent = `${generatedPing}ms`;
+
+                if (generatedPing > 30) {
+                    statusIndicator.textContent = "High Node Load";
+                    statusIndicator.style.color = "orange";
+                } else {
+                    statusIndicator.textContent = "Operational Nominal";
+                    statusIndicator.style.color = "green";
+                }
+            }, 750);
+        });
+    }
+});
